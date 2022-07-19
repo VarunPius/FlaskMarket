@@ -1,0 +1,31 @@
+version: "3.9"
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile-web
+    ports:
+      - "8000:5000"
+    volumes:
+      - .:/code
+    environment:
+      FLASK_ENV: development
+      FLASK_APP: src/market.py
+  db:
+    build:
+      context: .
+      dockerfile: Dockerfile-mysql
+    environment:
+      MYSQL_DATABASE: market
+      MYSQL_USER: vpiusr
+      MYSQL_PASSWORD: key4access
+      MYSQL_ROOT_PASSWORD: "root"
+    #env_file:
+    #  - ./src/properties/application.env
+    ports:
+      # <Port exposed> : < MySQL Port running inside container>
+      - "3306:3306"
+    volumes:
+      - mysql_volume:/var/lib/mysql
+volumes:
+  mysql_volume:
