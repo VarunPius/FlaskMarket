@@ -59,13 +59,13 @@ load_dotenv(dotenv_path=dotenv_path)
 user = os.getenv('MYSQL_USER')
 password = os.getenv('MYSQL_PASSWORD')
 root_user = 'root'
-root_pwd = os.getenv('MYSQL_ROOT_PASSWORD')
-host = os.getenv('MYSQL_HOST')
-port = os.getenv('MYSQL_PORT')
-database = os.getenv('MYSQL_DATABASE')
+root_pwd = 'root' #os.getenv('MYSQL_ROOT_PASSWORD')
+host = 'host.docker.internal' #os.getenv('MYSQL_HOST')
+port = '3306' #os.getenv('MYSQL_PORT')
+database = 'market' #os.getenv('MYSQL_DATABASE')
 #DATABASE_CONNECTION_URI = f'mysql+pymysql://{user}:{password}@{host}:{port}/{database}'
-#DATABASE_CONNECTION_URI = f'mysql+pymysql://{root_user}:{root_pwd}@{host}:{port}/{database}'
-DATABASE_CONNECTION_URI = 'sqlite:///market.db'
+DATABASE_CONNECTION_URI = f'mysql+pymysql://{root_user}:{root_pwd}@{host}:{port}/{database}'
+#DATABASE_CONNECTION_URI = 'sqlite:///market.db'
 
 # Flask Config #
 # the app is used as decorator. eg: @app.route

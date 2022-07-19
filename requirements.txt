@@ -3,3 +3,4 @@ python-dotenv
 SQLAlchemy
 flask-sqlalchemy
 pymysql
+cryptography
