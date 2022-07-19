@@ -3,7 +3,7 @@ services:
   web:
     build:
       context: .
-      dockerfile: Dockerfile-web
+      dockerfile: src/docker/Dockerfile-web
     ports:
       - "8000:5000"
     volumes:
@@ -14,7 +14,7 @@ services:
   db:
     build:
       context: .
-      dockerfile: Dockerfile-mysql
+      dockerfile: src/docker/Dockerfile-mysql
     environment:
       MYSQL_DATABASE: market
       MYSQL_USER: vpiusr
