@@ -1,10 +1,9 @@
 FROM python:3
 WORKDIR /code
 ENV FLASK_RUN_HOST=0.0.0.0
-RUN cd ../..
-COPY requirements.txt requirements.txt
+#COPY requirements.txt requirements.txt
+COPY . .
 RUN pip install -r requirements.txt
 EXPOSE 5000
-COPY . .
 CMD ["flask", "run"]
 #CMD python src/market.py

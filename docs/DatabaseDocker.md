@@ -59,6 +59,7 @@ db.create_all()
 from market import Item
 item1 = Item(name = 'iPhone 10', price = 500, barcode = '123qdw', description = 'Latest iphone, mint condition')
 item2 = Item(name = 'iMac', price = 1200, barcode = 'lap564x', description = 'New iMac, 27 inches')
+item3 = Item(name = 'Apple Watch', price = 300, barcode = 'acce6x', description = 'Apple watch 6 - 44mm')
 db.session.add(item1)
 db.session.add(item2)
 db.session.commit()
@@ -81,5 +82,7 @@ for item in Item.query.filter_by(price=500):
     item.name
     item.price
 
-
 ```
+
+# Accessing Docker image
+When the docker images are created using Docker Compose, we use `links` in the services using the database container. This let's us access the container from other services using the db service name (that's set in the Docker Compose file). However, if you don't do that, we can access the database container as though it's a native database instance running on native host system. Accessing native hosted system can be done by setting the `HOST` value of database as `'host.docker.internal'`
