@@ -71,7 +71,8 @@ mysql> show grants for 'vpiusr';
 ```
 from market import db
 db.create_all()
-from market import Item
+#from market import Item
+from market.models import Item
 item1 = Item(name = 'iPhone 10', price = 500, barcode = '123qdw', description = 'Latest iphone, mint condition')
 item2 = Item(name = 'iMac', price = 1200, barcode = 'lap564x', description = 'New iMac, 27 inches')
 item3 = Item(name = 'Apple Watch', price = 300, barcode = 'acce6x', description = 'Apple watch 6 - 44mm')

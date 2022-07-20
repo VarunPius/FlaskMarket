@@ -6,10 +6,12 @@ docker exec -i d219267acd4e bash -c "cd /code/src && ls -la"
 docker exec -it 2875960335b9 bash -c "cd /code/src && python"
 docker exec -i 6258f33dfb3d bash -c "cd /docker-entrypoint-initdb.d && ls -la"
 
+docker exec -i 9fec96431a54 bash -c "cd /code/src/market && ls -la"
 
 from market import db
 db.create_all()
 from market import Item
+from market.models import Item
 item1 = Item(name = 'iPhone 10', price = 500, code = '123qdw', description = 'Latest iphone, mint condition')
 db.session.add(item1)
 db.session.commit()

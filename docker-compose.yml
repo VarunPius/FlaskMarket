@@ -12,7 +12,7 @@ services:
       - .:/code
     environment:
       FLASK_ENV: development
-      FLASK_APP: src/market.py
+      FLASK_APP: src/run.py
   db:
     build:
       context: .
@@ -28,7 +28,7 @@ services:
       # <Port exposed> : < MySQL Port running inside container>
       - "3306:3306"
     volumes:
-      - ./src/properties/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./src/properties/db_init.sql:/docker-entrypoint-initdb.d/db_init.sql
       - mysql_volume:/var/lib/mysql
 volumes:
   mysql_volume:

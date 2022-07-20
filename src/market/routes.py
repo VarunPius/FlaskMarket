@@ -1,16 +1,32 @@
-# Home page
+####################################################################################################
+# Imports                                                                                         ##
+####################################################################################################
+
+# External modules:
+from flask import render_template
+
+# Internal Modules:
+from market import app
+from market.models import Item
+
+
+####################################################################################################
+# Code start                                                                                      ##
+####################################################################################################
+
+## Home page ##
 @app.route("/")
 @app.route("/home")
 def home_page():
     #return "<p>Marketplace Home Page!</p>".format(__name__)
     return render_template('home.html')
 
-# Profile Page
+## Profile Page ##
 @app.route("/profile/<user>")
 def profile_page(user):
     return "<p>Hello {}</p>".format(user)
 
-# Market page
+## Market page ##
 @app.route("/market")
 def market_page():
     items = Item.query.all()
