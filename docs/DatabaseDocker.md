@@ -111,7 +111,12 @@ db.session.rollback()
 
 i1.owner = User.query.filter_by(username = 'vpiusr').first().id
 i1.owner    # will return 1 which is the id of vpiusr
+db.session.add(i1)
+db.session.commit()
 
+i1 = Item.query.filter_by(name = 'iMac').first()
+i1.owner        # 1
+i1.owned_user   #  <User 1>
 ```
 
 ## Accessing data:
