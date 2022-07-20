@@ -6,8 +6,10 @@ services:
       dockerfile: src/docker/Dockerfile-web
     ports:
       - "8000:5000"
-    links:
-      - db
+    networks:
+      - backend
+    #links:   #considered legacy and has been replaced by networks
+    #  - db
     volumes:
       - .:/code
     environment:
@@ -21,14 +23,20 @@ services:
       MYSQL_DATABASE: market
       MYSQL_USER: vpiusr
       MYSQL_PASSWORD: key4access
-      MYSQL_ROOT_PASSWORD: "root"
+      MYSQL_ROOT_PASSWORD: root
     #env_file:
     #  - ./src/properties/application.env
+    networks:
+      - backend
     ports:
       # <Port exposed> : < MySQL Port running inside container>
       - "3306:3306"
     volumes:
       - ./src/properties/db_init.sql:/docker-entrypoint-initdb.d/db_init.sql
       - mysql_volume:/var/lib/mysql
+
 volumes:
   mysql_volume:
+
+networks:
+  backend: 

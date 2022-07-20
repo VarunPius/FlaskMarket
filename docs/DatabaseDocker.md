@@ -140,9 +140,9 @@ for item in Item.query.filter_by(price=500):
 ## Data manipulation in Database
 ```
 INSERT INTO item
-(name, price, barcode, description)
+(name, price, barcode, description, owner)
 VALUES
-("PS4", 350, "qwe784", "Original playstation 4 with 4 controllers");
+("PS4", 350, "qwe784", "Original playstation 4 with 4 controllers", 2);
 ```
 
 # Accessing Docker image
