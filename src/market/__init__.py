@@ -17,8 +17,10 @@ from dotenv import load_dotenv
 
 ## Directory Config ##
 #template_dir = os.path.abspath('../templates')
-template_dir = os.path.abspath(os.path.dirname(os.path.dirname(os.path.dirname(__file__))))
-template_dir = os.path.join(template_dir, 'templates')
+#template_dir = os.path.abspath(os.path.dirname(os.path.dirname(os.path.dirname(__file__))))
+basedir = os.path.abspath(os.path.dirname(os.path.dirname(os.path.dirname(__file__))))
+template_dir = os.path.join(basedir, 'templates')
+database_dir = os.path.join(basedir, 'src', 'properties', 'market.db')
 dotenv_path = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
 dotenv_path = os.path.join(template_dir, 'properties', 'application.env')
 load_dotenv(dotenv_path=dotenv_path)
@@ -35,7 +37,8 @@ database  = 'market'                    #os.getenv('MYSQL_DATABASE')
 DATABASE_CONNECTION_URI = f'mysql+pymysql://{root_user}:{root_pwd}@{host}:{port}/{database}'
 
 #DATABASE_CONNECTION_URI = f'mysql+pymysql://{user}:{password}@{host}:{port}/{database}'
-#DATABASE_CONNECTION_URI = 'sqlite:///market.db'
+#DATABASE_CONNECTION_URI = 'sqlite:///market.db'    #if db in same location
+#DATABASE_CONNECTION_URI = 'sqlite:///' + database_dir
 
 
 ## Flask Config ##
