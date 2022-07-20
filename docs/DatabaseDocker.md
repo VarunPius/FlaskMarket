@@ -101,5 +101,13 @@ for item in Item.query.filter_by(price=500):
 
 ```
 
+## Data manipulation in Database
+```
+INSERT INTO item
+(name, price, barcode, description)
+VALUES
+("PS4", 350, "qwe784", "Original playstation 4 with 4 controllers");
+```
+
 # Accessing Docker image
 When the docker images are created using Docker Compose, we use `links` in the services using the database container. This let's us access the container from other services using the db service name (that's set in the Docker Compose file). However, if you don't do that, we can access the database container as though it's a native database instance running on native host system. Accessing native hosted system can be done by setting the `HOST` value of database as `'host.docker.internal'`

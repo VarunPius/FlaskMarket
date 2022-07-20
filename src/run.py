@@ -15,9 +15,11 @@
 # 2022-07-19  Varun Pius Rodrigues  v2: Folder structure setup                                    ##
 #                                                                                                 ##
 ####################################################################################################
-# TODO:
-#
-# //CHECK: https://medium.com/swlh/how-to-connect-to-mysql-docker-from-python-application-on-macos-mojave-32c7834e5afa
+# TODO:                                                                                           ##
+####################################################################################################
+# - .dockerignore
+# - https://medium.com/@ns2586/sqlalchemys-relationship-and-lazy-parameter-4a553257d9ef
+# - CHECK: https://medium.com/swlh/how-to-connect-to-mysql-docker-from-python-application-on-macos-mojave-32c7834e5afa
 #          https://www.stefanproell.at/tags/docker-compose.-grant/
 ####################################################################################################
 
