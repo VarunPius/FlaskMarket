@@ -4,17 +4,24 @@ We create a SQL script with the queries that GRANT permissions to our users
 ```
 privileges.sql
 
-CREATE USER 'vpiusr'@'%' IDENTIFIED BY 'vpiusr';
+CREATE USER 'vpiusr'@'%' IDENTIFIED BY 'vpiusr_pwd';
 GRANT ALL PRIVILEGES ON *.* TO 'vpiusr'@'%';
 FLUSH PRIVILEGES;
 ```
 
-This SQL script needs to be copied to the folder `/docker-entrypoint-initdb.d/` inside a Docker image. All SQL files inside /docker-entrypoint-initdb.d/ the directory would be executed by default when MySQL container boots. 
+This SQL script needs to be copied to the folder `/docker-entrypoint-initdb.d/` inside a Docker image. All SQL files inside `/docker-entrypoint-initdb.d/` the directory would be executed by default when MySQL container boots. 
 
 If we have `--skip-name-resolve` mode, MySQL does not consider the DNS lookup values and look for IP address which is default `127.0.0.1`. In this case, we would need to manually state the IP address as `-p 127.0.0.1:3306:3306` in the `docker run` command.
 
 For the generic purpose, I have used `%` for any valid host. You can state the specific host here.
 
+Sometimes, due to an existing bug in MySQL, the above query won't execute because the user would already have been created. This would happen in testing, when the data is cached. Under that circumstance, drop the user. In other words, include the following before `CREATE USER` line:
+
+```
+DROP USER 'vpiusr'@'%';
+
+FLUSH PRIVILEGES;
+```
 
 ## Dockerfile
 Next we start with the Dockerfile. Let's name our Dockerfile `Dockerfile-mysql`. It will be as follows:
@@ -29,6 +36,14 @@ Finally, execute below docker comments to create a custom MySQL image and run it
 ```
 docker build -t custom-mysql . --file ./Dockerfile-mysql
 docker run -d --name custom-mysql-container -p 127.0.0.1:3306:3306 custom-mysql
+```
+
+It is important to know that the docker container won't execute scripts inside `/docker-entrypoint-initdb.d/` if the volume already exists. The scripts are only executed when the conatiner is being built from scratch along with the volume. If the volume already exists, delete volume and retry the docker build
+
+Deleting volume is done as follows:
+```
+docker volume ls
+docker volume rm data_volume
 ```
 
 ## Docker Compose
@@ -62,6 +77,7 @@ item2 = Item(name = 'iMac', price = 1200, barcode = 'lap564x', description = 'Ne
 item3 = Item(name = 'Apple Watch', price = 300, barcode = 'acce6x', description = 'Apple watch 6 - 44mm')
 db.session.add(item1)
 db.session.add(item2)
+db.session.add(item3)
 db.session.commit()
 Item.query.all()
 ```

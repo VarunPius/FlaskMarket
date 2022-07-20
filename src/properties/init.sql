@@ -1,10 +1,13 @@
-/* */
-CREATE USER 'vpiusr'@'%' IDENTIFIED BY 'vpiusr';
+DROP USER 'vpiusr'@'%';
 
-/* */
-GRANT ALL PRIVILEGES ON *.* TO 'vpiusr'@'%';
-
-/* */
 FLUSH PRIVILEGES;
 
 
+/* */
+CREATE USER 'vpiusr'@'%' IDENTIFIED BY 'key4access';
+
+/* */
+GRANT ALL ON *.* TO 'vpiusr'@'%';
+
+/* */
+FLUSH PRIVILEGES;
