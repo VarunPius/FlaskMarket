@@ -45,6 +45,7 @@ DATABASE_CONNECTION_URI = f'mysql+pymysql://{root_user}:{root_pwd}@{host}:{port}
 # the app is used as decorator. eg: @app.route
 app = Flask(__name__, template_folder=template_dir)
 app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_CONNECTION_URI
+app.config['SECRET_KEY'] = '1dedd39e59932fa82aca03e8'   #Check Notes
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 

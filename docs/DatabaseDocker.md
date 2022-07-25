@@ -102,6 +102,7 @@ db.session.commit()
 
 Item.query.all()
 User.query.all()
+db.session.query(Item).all()    # can also use this
 
 i1 = Item.query.filter_by(name = 'iMac')    #will return BaseQuery
 i1 = Item.query.filter_by(name = 'iMac').first()    # will return object itself

@@ -49,3 +49,17 @@ def example():
 ```
 
 In our case, the value would be `market`.
+
+## SECRET_KEY
+When writing to database, we would need a secret key when dealing with forms.
+Forms require the use of a secret key, which after verifying, will it write to database. 
+So we generate the hex value in Python as follows:
+```
+>>> os.urandom(12).hex()
+'1dedd39e59932fa82aca03e8'
+```
+
+This value is then added to the config:
+```
+app.config['SECRET_KEY'] = '1dedd39e59932fa82aca03e8'
+```
