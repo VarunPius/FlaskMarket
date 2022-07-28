@@ -8,7 +8,7 @@ from flask import render_template, redirect, url_for, flash, get_flashed_message
 # Internal Modules:
 from market import app
 from market.models import Item, User
-from market.forms import RegisterForm
+from market.forms import RegisterForm, LoginForm
 from market import db
 
 
@@ -49,11 +49,12 @@ def market_page():
 # It will render the register page, but the error will pop-up when we try to submit as it tries to send POST data
 @app.route("/register", methods=['GET', 'POST'])
 def register_page():
-    form = RegisterForm()
+    form = RegisterForm()       # Defined inside forms.py
     if form.validate_on_submit():
         user_to_create = User(username = form.user_name.data,
                               email = form.email_address.data,
-                              pwd_hash = form.password1.data)
+                              #pwd_hash = form.password1.data
+                              password = form.password1.data)   #password here is the @property
         db.session.add(user_to_create)
         db.session.commit()
         return redirect(url_for('market_page'))
@@ -64,3 +65,8 @@ def register_page():
 
 
     return render_template('register.html', form = form)
+
+@app.route('/login', methods=['GET', 'POST'])
+def login_page():
+    form = LoginForm()
+    return render_template('login.html', form = form)

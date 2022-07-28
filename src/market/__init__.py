@@ -6,8 +6,9 @@
 import os
 
 # External modules:
-from flask import Flask, render_template
+from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
+from flask_bcrypt import Bcrypt
 from dotenv import load_dotenv
 
 
@@ -48,6 +49,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_CONNECTION_URI
 app.config['SECRET_KEY'] = '1dedd39e59932fa82aca03e8'   #Check Notes
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
+bcrypt = Bcrypt(app)
 
 
 ####################################################################################################
