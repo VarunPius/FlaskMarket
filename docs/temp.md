@@ -3,7 +3,7 @@ docker run -d --name custom-mysql-container -p 3306:3306 custom-mysql
 docker exec -it d9269ca25c35 mysql -uroot -p
 
 docker exec -i d219267acd4e bash -c "cd /code/src && ls -la"
-docker exec -it 2875960335b9 bash -c "cd /code/src && python"
+docker exec -it c6886340bb47 bash -c "cd /code/src && python"
 docker exec -i 6258f33dfb3d bash -c "cd /docker-entrypoint-initdb.d && ls -la"
 
 docker exec -i 9fec96431a54 bash -c "cd /code/src/market && ls -la"

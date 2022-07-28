@@ -81,6 +81,43 @@ db.session.add(item2)
 db.session.add(item3)
 db.session.commit()
 Item.query.all()
+
+# After model is changed such as adding columns:
+db.drop_all()
+db.create_all()
+from market.models import User, Item
+
+item1 = Item(name = 'iPhone 10', price = 500, barcode = '123qdw', description = 'Latest iphone, mint condition')
+item2 = Item(name = 'iMac', price = 1200, barcode = 'lap564x', description = 'New iMac, 27 inches')
+item3 = Item(name = 'Apple Watch', price = 300, barcode = 'acce6x', description = 'Apple watch 6 - 44mm')
+
+user1 = User(username = 'vpiusr', email = 'vpiusr@vpiusr.com', pwd_hash = 'aQd34ert62855', wallet = 5000)
+user2 = User(username = 'vinu', email = 'vinu@vpiusr.com', pwd_hash = 'aQerg4564e697')
+db.session.add(item1)
+db.session.add(item2)
+db.session.add(item3)
+db.session.add(user1)
+db.session.add(user2)
+db.session.commit()
+
+Item.query.all()
+User.query.all()
+db.session.query(Item).all()    # can also use this
+
+i1 = Item.query.filter_by(name = 'iMac')    #will return BaseQuery
+i1 = Item.query.filter_by(name = 'iMac').first()    # will return object itself
+i1.owner # will return empty as no owner value
+i1.owner = User.query.filter_by(username = 'vpiusr').first()    # this will result in error as owner value is `id` n not the whole object.
+db.session.rollback()
+
+i1.owner = User.query.filter_by(username = 'vpiusr').first().id
+i1.owner    # will return 1 which is the id of vpiusr
+db.session.add(i1)
+db.session.commit()
+
+i1 = Item.query.filter_by(name = 'iMac').first()
+i1.owner        # 1
+i1.owned_user   #  <User 1>
 ```
 
 ## Accessing data:
@@ -99,6 +136,14 @@ for item in Item.query.filter_by(price=500):
     item.name
     item.price
 
+```
+
+## Data manipulation in Database
+```
+INSERT INTO item
+(name, price, barcode, description, owner)
+VALUES
+("PS4", 350, "qwe784", "Original playstation 4 with 4 controllers", 2);
 ```
 
 # Accessing Docker image
