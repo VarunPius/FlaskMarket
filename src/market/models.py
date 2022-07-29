@@ -4,6 +4,7 @@
 
 # Internal Modules:
 from market import db
+from market import bcrypt
 
 
 ####################################################################################################
@@ -22,6 +23,15 @@ class User(db.Model):
                                                     #But with backref you can query from Item which User owns the item
                                                     #lazy=True tells SQLAlchemy to grab everything in one shot
                                                     # This won't be a separate column but just a relationship and hence db.relationship and not db.Column
+
+    @property
+    def password(self):
+        return self.password
+    
+    @password.setter        # property's name here to indicate which property is getting set (or get)
+    def password(self, plain_txt_pwd):
+        self.pwd_hash = bcrypt.generate_password_hash(plain_txt_pwd).decode('utf-8')
+
 
 ## Item object model ##
 class Item(db.Model):
