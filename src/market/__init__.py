@@ -9,6 +9,7 @@ import os
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
+from flask_login import LoginManager
 from dotenv import load_dotenv
 
 
@@ -21,6 +22,7 @@ from dotenv import load_dotenv
 #template_dir = os.path.abspath(os.path.dirname(os.path.dirname(os.path.dirname(__file__))))
 basedir = os.path.abspath(os.path.dirname(os.path.dirname(os.path.dirname(__file__))))
 template_dir = os.path.join(basedir, 'templates')
+static_dir = os.path.join(template_dir, 'assets')
 database_dir = os.path.join(basedir, 'src', 'properties', 'market.db')
 dotenv_path = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
 dotenv_path = os.path.join(template_dir, 'properties', 'application.env')
@@ -44,12 +46,17 @@ DATABASE_CONNECTION_URI = f'mysql+pymysql://{root_user}:{root_pwd}@{host}:{port}
 
 ## Flask Config ##
 # the app is used as decorator. eg: @app.route
-app = Flask(__name__, template_folder=template_dir)
+#app = Flask(__name__, template_folder=template_dir)
+app = Flask(__name__, template_folder=template_dir, static_url_path='/static', static_folder=static_dir) # Explanation in Notes
 app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_CONNECTION_URI
 app.config['SECRET_KEY'] = '1dedd39e59932fa82aca03e8'   #Check Notes
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['CUSTOM_STATIC_PATH'] = static_dir
 db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
+login_manager = LoginManager(app)
+login_manager.login_view = 'login_page'     #See notes
+login_manager.login_message_category = 'info'
 
 
 ####################################################################################################

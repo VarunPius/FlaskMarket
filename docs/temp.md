@@ -20,3 +20,26 @@ Item.query.all()
 for item in Item.query.all():
     item.name
     item.price
+
+
+
+---------------------------------------------------------------------------------------------
+
+
+```
+app = Flask(__name__, template_folder="public/ui/build/", static_folder=os.path.join(CWD, "public/ui/build/static/"), static_url_path="/static")
+```
+
+If you just want to move the location of your static files, then the simplest method is to declare the paths in the constructor. In the example below, I have moved my templates and static files into a sub-folder called web.
+
+app = Flask(__name__,
+            static_url_path='', 
+            static_folder='web/static',
+            template_folder='web/templates')
+
+    static_url_path='' removes any preceding path from the URL (i.e. the default /static).
+    static_folder='web/static' to serve any files found in the folder web/static as static files.
+    template_folder='web/templates' similarly, this changes the templates folder.
+
+https://newbedev.com/how-to-serve-static-files-in-flask
+

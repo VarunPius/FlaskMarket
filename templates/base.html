@@ -13,8 +13,9 @@
       </title>
    </head>
    <body>
+    <!-- <base href="http://localhost:8000" /> -->
     <nav class="navbar navbar-expand-md navbar-dark bg-dark">
-      <a class="navbar-brand" href="#">Flask Market</a>
+      <a class="navbar-brand" href="{{ url_for('home_page') }}">Flask Market</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -27,16 +28,45 @@
                 <a class="nav-link" href="{{ url_for('market_page') }}">Market</a>
             </li>
         </ul>
-        <ul class="navbar-nav">
-            <li class="nav-item">
-                <a class="nav-link" href="{{ url_for('login_page') }}">Login</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{{ url_for('register_page') }}">Register</a>
-            </li>
-        </ul>
+        {% if current_user.is_authenticated %}  
+        <!-- `current_user` is built-in in flask_login;
+            When we inherited `UserMixin` into our model, we inherited the is_authenticated method
+            Flask-login handles all session management 
+            including identifying the current user who is logging in or if it's a anonymous user
+        -->
+
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" style="color: green; font-weight: bold">
+                        <i class="fas fa-wallet"></i>
+                        <!-- fas fa-dollar-sign -->
+                        <!-- ${{ current_user.wallet }} -->
+                        ${{ current_user.pretty_wallet }}
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Welcome, {{ current_user.username }}</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('logout_page') }}">Logoff</a>
+                </li>
+            </ul>
+    
+        {% else %}
+
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('login_page') }}">Login</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('register_page') }}">Register</a>
+                </li>
+            </ul>
+
+        {% endif %}
       </div>
     </nav>
+
       {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
           {% for category, message in messages %}
@@ -50,6 +80,7 @@
           {% endfor %}
         {% endif %}
       {% endwith %}
+      
       {% block content %}
 
       {% endblock %}
@@ -66,8 +97,8 @@
    </body>
    <style>
       body {
-      background-color: #212121;
-      color: white
+        background-color: #212121;
+        color: white
       }
    </style>
 </html>
