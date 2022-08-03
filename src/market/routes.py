@@ -9,7 +9,7 @@ from flask_login import login_user, logout_user, login_required
 # Internal Modules:
 from market import app
 from market.models import Item, User
-from market.forms import RegisterForm, LoginForm
+from market.forms import RegisterForm, LoginForm, BuyItemForm, SellItemForm
 from market import db
 
 
@@ -32,11 +32,17 @@ def profile_page(user):
 
 
 ## Market page ##
-@app.route("/market")
+@app.route("/market", methods=['GET', 'POST'])
 @login_required
 def market_page():
+    buy_form = BuyItemForm()
+    if buy_form.validate_on_submit():
+        print(buy_form)             #will display form object in server-side cli/terminal
+        print(buy_form.__dict__)    #will display all key value pairs available in object
+        print(buy_form['submit'])
+
     items = Item.query.all()
-    return render_template('market.html', items=items)
+    return render_template('market.html', items=items, buy_form = buy_form)
     #items = [
     #    {'id': 1, 'name': 'iPhone', 'code': 'A123QR', 'price': 1000},
     #    {'id': 2, 'name': 'Laptop', 'code': 'A124QD', 'price': 1500},

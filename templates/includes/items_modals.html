@@ -2,32 +2,73 @@
     .modal-content {
       background-color: #212121
     }
-  </style>
+</style>
   
-  <!-- More Info -->
-  <div class="modal fade" id="Modal-MoreInfo-{{ item.idx }}"
+<!-- More Info Modal -->
+<div class="modal fade" id="Modal-MoreInfo-{{ item.idx }}"
        tabindex="-1"
        aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="ModalLabel">
-            <!-- -->
-            {{ item.name }}
-          </h5>
-          <button type="button" class="close"
-                  data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
+        <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="ModalLabel">
+                  <!-- -->
+                  {{ item.name }}
+              </h5>
+              <button type="button" class="close"
+                      data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+                {{ item.description }}
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary"
+                      data-dismiss="modal">Close
+              </button>
+            </div>
         </div>
-        <div class="modal-body">
-          {{ item.description }}
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary"
-                  data-dismiss="modal">Close
-          </button>
-        </div>
-      </div>
     </div>
-  </div>
+</div>
+
+
+<!-- Purchase confirmation Modal -->
+<div class="modal fade" id="Modal-PurchaseConfirmation-{{ item.idx }}"
+       tabindex="-1"
+       aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="ModalLabel">
+                  <!-- -->
+                  {{ item.name }}
+              </h5>
+              <button type="button" class="close"
+                      data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+                <form method="POST">
+                    {{ buy_form.hidden_tag() }} <!-- Always added when having POST request for CSRF -->
+                    <h4 class="text-center">
+                        Are you sure you want to buy {{ item.name }} for ${{ item.price }}?
+                    </h4>
+                    <br>
+                    <h6 class="text-center">
+                        By clicking "Buy", you will buy this item?
+                    </h6>
+                    <br>{{
+                    <input id="purchased_item" name="purchased_item" type="hidden" value="bought_item">   <!-- type is hidden because we are not going to display this in the form but rather we will use it to pass value to application-->
+                    {{ buy_form.submit(class="btn btn-outline-success btn-block") }}
+                </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary"
+                      data-dismiss="modal">Close
+              </button>
+            </div>
+        </div>
+    </div>
+</div>

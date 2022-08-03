@@ -22,7 +22,7 @@ Registration Page
         
         <div class="text-left"> <!-- This container will put all text within the div aligned to left -->
             <form method="POST" class="form-register" style="color:white">
-                {{ form.hidden_tag() }}
+                {{ form.hidden_tag() }}     <!-- form here is the variable passed in the render_template in routes. if xyz_form was passed, this would have been xyz_form.hiden_tag() -->
                 <!-- This is to protect from CSRF(Cross-site request forgery)-->
                 
                 {{ form.user_name.label() }}

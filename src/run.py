@@ -16,6 +16,8 @@
 #                                                                                                 ##
 ####################################################################################################
 # TODO:                                                                                           ##
+#   - Use FLASK_DEBUG instead of FLASK_ENV as FLASK_ENV is deprecated                             ##
+#   - Notes on hidden_tag() for csrf
 ####################################################################################################
 # - .dockerignore
 # - https://medium.com/@ns2586/sqlalchemys-relationship-and-lazy-parameter-4a553257d9ef
