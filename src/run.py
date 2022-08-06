@@ -17,7 +17,12 @@
 ####################################################################################################
 # TODO:                                                                                           ##
 #   - Use FLASK_DEBUG instead of FLASK_ENV as FLASK_ENV is deprecated                             ##
-#   - Notes on hidden_tag() for csrf
+#   - Create profile page, with ability to add money to wallet
+#   - Notes on hidden_tag() for csrf 
+#   - Test with multiple Docker web and single db containers
+#   - Session mgmt: 
+#       - include timeout
+#       - JWT
 ####################################################################################################
 # - .dockerignore
 # - https://medium.com/@ns2586/sqlalchemys-relationship-and-lazy-parameter-4a553257d9ef

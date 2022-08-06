@@ -59,8 +59,17 @@
                     <h6 class="text-center">
                         By clicking "Buy", you will buy this item?
                     </h6>
-                    <br>{{
-                    <input id="purchased_item" name="purchased_item" type="hidden" value="bought_item">   <!-- type is hidden because we are not going to display this in the form but rather we will use it to pass value to application-->
+                    <br>
+                    <!-- 
+                      The following line is generated in the cli when we add the buy_form['submit'] in the market's page:
+                      <input id="submit" name="submit" type="submit" value="Buy Item!">
+                      We will use this auto-generated line to help us in forming new query.
+                      We change type to "hidden" because we are not going to display this in the form but rather we will use it to pass value to application 
+                    -->
+                    <!-- This following line in the routes will display the name of the item at `request.form.get('purchased_item')` -->
+                    <!-- <input id="purchased_item" name="purchased_item" type="hidden" value="{{ item.name }}"> --> 
+                    <!-- Because it would be prudent to pass item id, we modify the original code a little and pass item idx to purchased_item -->
+                    <input id="purchased_item" name="purchased_item" type="hidden" value="{{ item.idx }}">
                     {{ buy_form.submit(class="btn btn-outline-success btn-block") }}
                 </form>
             </div>

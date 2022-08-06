@@ -9,3 +9,4 @@ flask-wtf
 wtforms
 flask_bcrypt
 flask_login
+requests
