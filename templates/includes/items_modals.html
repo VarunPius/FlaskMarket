@@ -1,0 +1,83 @@
+<style>
+    .modal-content {
+      background-color: #212121
+    }
+</style>
+  
+<!-- More Info Modal -->
+<div class="modal fade" id="Modal-MoreInfo-{{ item.idx }}"
+       tabindex="-1"
+       aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="ModalLabel">
+                  <!-- -->
+                  {{ item.name }}
+              </h5>
+              <button type="button" class="close"
+                      data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+                {{ item.description }}
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary"
+                      data-dismiss="modal">Close
+              </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Purchase confirmation Modal -->
+<div class="modal fade" id="Modal-PurchaseConfirmation-{{ item.idx }}"
+       tabindex="-1"
+       aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="ModalLabel">
+                  <!-- -->
+                  {{ item.name }}
+              </h5>
+              <button type="button" class="close"
+                      data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+                <form method="POST">
+                    {{ buy_form.hidden_tag() }} <!-- Always added when having POST request for CSRF -->
+                    <h4 class="text-center">
+                        Are you sure you want to buy {{ item.name }} for ${{ item.price }}?
+                    </h4>
+                    <br>
+                    <h6 class="text-center">
+                        By clicking "Buy", you will buy this item?
+                    </h6>
+                    <br>
+                    <!-- 
+                      The following line is generated in the cli when we add the buy_form['submit'] in the market's page:
+                      <input id="submit" name="submit" type="submit" value="Buy Item!">
+                      We will use this auto-generated line to help us in forming new query.
+                      We change type to "hidden" because we are not going to display this in the form but rather we will use it to pass value to application 
+                    -->
+                    <!-- This following line in the routes will display the name of the item at `request.form.get('purchased_item')` -->
+                    <!-- <input id="purchased_item" name="purchased_item" type="hidden" value="{{ item.name }}"> --> 
+                    <!-- Because it would be prudent to pass item id, we modify the original code a little and pass item idx to purchased_item -->
+                    <input id="purchased_item" name="purchased_item" type="hidden" value="{{ item.idx }}">
+                    {{ buy_form.submit(class="btn btn-outline-success btn-block") }}
+                </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary"
+                      data-dismiss="modal">Close
+              </button>
+            </div>
+        </div>
+    </div>
+</div>

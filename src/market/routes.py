@@ -3,13 +3,13 @@
 ####################################################################################################
 
 # External modules:
-from flask import render_template, redirect, url_for, flash, get_flashed_messages
-from flask_login import login_user, logout_user, login_required
+from flask import render_template, redirect, url_for, flash, request
+from flask_login import login_user, logout_user, login_required, current_user
 
 # Internal Modules:
 from market import app
 from market.models import Item, User
-from market.forms import RegisterForm, LoginForm
+from market.forms import RegisterForm, LoginForm, BuyItemForm, SellItemForm
 from market import db
 
 
@@ -32,11 +32,48 @@ def profile_page(user):
 
 
 ## Market page ##
-@app.route("/market")
+@app.route("/market", methods=['GET', 'POST'])
 @login_required
 def market_page():
-    items = Item.query.all()
-    return render_template('market.html', items=items)
+    buy_form = BuyItemForm()
+    
+    """
+    if buy_form.validate_on_submit():
+        #print(buy_form)             #will display form object in server-side cli/terminal
+        #print(buy_form.__dict__)    #will display all key value pairs available in object
+        #print(buy_form['submit'])
+        print(request.form.get('purchased_item'))    # will return parameter of item passed in the item_modal.html file at:
+                                                     # <input id="purchased_item" name="purchased_item" type="hidden" value="{{ item.idx }}">
+                                                     # Here, it will be item.idx
+    """
+    
+    if request.method == "POST":
+        purchased_item = request.form.get('purchased_item')
+        p_item_obj = Item.query.filter_by(idx=purchased_item).first()
+        if p_item_obj:
+            if current_user.can_purchase(p_item_obj):
+                #p_item_obj.owner = current_user.id     #will move this n next 2 lines to item model
+                #current_user.wallet -= p_item_obj.price
+                #db.session.commit()
+                p_item_obj.buy(current_user)
+                flash(f"You now own {p_item_obj.name} for {p_item_obj.price}. Congratulations!", category = "success")
+            else:
+                flash(f"Not enough funds. Add more money to wallet", category = "danger")
+            
+            return redirect(url_for('market_page'))
+
+    if request.method == "GET":
+        #items = Item.query.all()   # will display all items
+        items = Item.query.filter_by(owner=None)
+        return render_template('market.html', items=items, buy_form = buy_form)
+    
+    """
+    We segregated the method with request.method because of form resubmission.
+    Without that, the form keeps resubmitting everytime you refresh and it keeps deducting money.
+    This makes it impossible to refresh the market page once you have hit buy item.
+    Now, you can refresh page because buy item is a POST requst while refresh will be a GET request
+    """
+    
     #items = [
     #    {'id': 1, 'name': 'iPhone', 'code': 'A123QR', 'price': 1000},
     #    {'id': 2, 'name': 'Laptop', 'code': 'A124QD', 'price': 1500},

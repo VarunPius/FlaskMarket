@@ -66,6 +66,9 @@ class User(db.Model, UserMixin):
             return str_wallet[::-1]
         else:
             return f"{self.wallet}"
+    
+    def can_purchase(self, item_obj):
+        return self.wallet >= item_obj.price
 
 
 ## Item object model ##
@@ -79,3 +82,8 @@ class Item(db.Model):
 
     def __repr__(self):
         return f'Item {self.name}\'s price is {self.price}'
+
+    def buy(self, user):
+        self.owner = user.id     
+        user.wallet -= self.price
+        db.session.commit()
