@@ -40,6 +40,7 @@ class User(db.Model, UserMixin):
                                                     #But with backref you can query from Item which User owns the item
                                                     #lazy=True tells SQLAlchemy to grab everything in one shot
                                                     # This won't be a separate column but just a relationship and hence db.relationship and not db.Column
+                                                    # Best example is can_sell method in this model itself (check down)
 
     @property
     def password(self):
@@ -70,6 +71,9 @@ class User(db.Model, UserMixin):
     def can_purchase(self, item_obj):
         return self.wallet >= item_obj.price
 
+    def can_sell(self, item_obj):
+        return item_obj in self.owns    # Best use case of backref; 
+                                        # here we are verifying we user owns the item
 
 ## Item object model ##
 class Item(db.Model):
@@ -86,4 +90,9 @@ class Item(db.Model):
     def buy(self, user):
         self.owner = user.id     
         user.wallet -= self.price
+        db.session.commit()
+
+    def sell(self, user):
+        self.owner = None
+        user.wallet += self.price
         db.session.commit()

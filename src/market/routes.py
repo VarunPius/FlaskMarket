@@ -36,6 +36,7 @@ def profile_page(user):
 @login_required
 def market_page():
     buy_form = BuyItemForm()
+    sell_form = SellItemForm()
     
     """
     if buy_form.validate_on_submit():
@@ -48,6 +49,7 @@ def market_page():
     """
     
     if request.method == "POST":
+        #Purchase Item logic
         purchased_item = request.form.get('purchased_item')
         p_item_obj = Item.query.filter_by(idx=purchased_item).first()
         if p_item_obj:
@@ -60,12 +62,22 @@ def market_page():
             else:
                 flash(f"Not enough funds. Add more money to wallet", category = "danger")
             
-            return redirect(url_for('market_page'))
+        # Sell item logic
+        selling_item = request.form.get('sold_item')
+        s_item_obj = Item.query.filter_by(idx=selling_item).first()
+        if s_item_obj:
+            if current_user.can_sell(s_item_obj):
+                s_item_obj.sell(current_user)
+                flash(f"Successfully sold {s_item_obj.name} for ${s_item_obj.price}. Funds will be added to waller shortly", category = "success")
+            else:
+                flash(f"Something went wrong. Try again later.", category = "danger")
+        return redirect(url_for('market_page'))
 
     if request.method == "GET":
         #items = Item.query.all()   # will display all items
         items = Item.query.filter_by(owner=None)
-        return render_template('market.html', items=items, buy_form = buy_form)
+        owned_items = Item.query.filter_by(owner=current_user.id)
+        return render_template('market.html', items=items, buy_form = buy_form, sell_form = sell_form, owned_items = owned_items)
     
     """
     We segregated the method with request.method because of form resubmission.
