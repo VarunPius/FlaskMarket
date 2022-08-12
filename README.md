@@ -1,5 +1,5 @@
 # Flask Market
-[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](docs/license_apache_v2) [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](docs/license_mit) ![version](https://img.shields.io/badge/version-5.0.0-orange) ![PR](https://img.shields.io/badge/PRs-Welcome-green)
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](docs/license_apache_v2) [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](docs/license_mit) ![version](https://img.shields.io/badge/version-5.0.2-orange) ![PR](https://img.shields.io/badge/PRs-Welcome-green)
 
 This project is an implementation of an online market place for users to buy and sell stuff in Python Flask.
 
