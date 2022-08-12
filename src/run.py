@@ -4,7 +4,7 @@
 #                                                                                                 ##
 # Project         : Flask Market place                                                            ##
 # Author          : Varun Pius Rodrigues                                                          ##
-# Description     : This is the implementationof the  online market web application               ##
+# Description     : This is the implementation of the  online market web application              ##
 #                                                                                                 ##
 ####################################################################################################
 # Change Log:                                                                                     ##
@@ -13,7 +13,9 @@
 #                                                                                                 ##
 # 2022-07-18  Varun Pius Rodrigues  v1: Base application with basic folder structure              ##
 # 2022-07-19  Varun Pius Rodrigues  v2: Folder structure setup                                    ##
-#                                                                                                 ##
+# 2022-07-19  Varun Pius Rodrigues  v3: User Model with Login and Registration page               ##
+# 2022-07-19  Varun Pius Rodrigues  v4: User Authentication                                       ##
+# 2022-07-19  Varun Pius Rodrigues  v5: Item buying and selling                                   ##
 ####################################################################################################
 # TODO:                                                                                           ##
 #   - Use FLASK_DEBUG instead of FLASK_ENV as FLASK_ENV is deprecated                             ##

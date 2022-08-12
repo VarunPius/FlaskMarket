@@ -25,7 +25,7 @@ Market Page
             <tbody>
                 <!-- Rows inside table here -->
                 {% for item in items %}
-                {% include 'includes/items_modals.html' %}
+                {% include 'includes/items_modal.html' %}
 
                     <tr>
                         <td>{{ item.idx }}</td>
@@ -34,8 +34,8 @@ Market Page
                         <td>{{ item.barcode }}</td>
                         <td>{{ item.description }}</td>
                         <td>
-                            <button class="btn btn-outline btn-info" data-toggle="modal" data-target="#Modal-MoreInfo-{{ item.idx }}">More Info</button>
-                            <button class="btn btn-outline btn-success" data-toggle="modal" data-target="#Modal-PurchaseConfirmation-{{ item.idx }}">Purchase this item</button>
+                            <button class="btn btn-success" data-toggle="modal" data-target="#Modal-PurchaseConfirmation-{{ item.idx }}">Purchase this item</button>
+                            <button class="btn btn-outline-info" data-toggle="modal" data-target="#Modal-MoreInfo-{{ item.idx }}">More Info</button>
                         </td>
                     </tr>
                 {% endfor %}
@@ -46,6 +46,25 @@ Market Page
         <h2>Owned Items</h2>
         <p>Select Item to sell</p>
         <br>
+        <div class="row">
+            {% for owned_item in owned_items %}
+            {% include 'includes/owned_item_modal.html' %}
+            <div class="col-md-6">
+                    <div style="margin-bottom: 5px" class="card text-center bg-dark">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ owned_item.name }}</h5>
+                            <button type="button" class="btn btn-outline-danger" style="margin-bottom: 5px"
+                                    data-toggle="modal" data-target="#Modal-SellConfirmation-{{ owned_item.idx }}">
+                                Sell Item
+                            </button>
+                            <p class="card-text"><strong>
+                                ${{ owned_item.price }}
+                            </strong></p>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
     </div>
 </div>
 {% endblock %}
